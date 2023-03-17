@@ -63,23 +63,27 @@ function operate (a, operator, b) {
     }
 };
 
-let i = 0;
+const arr = [];
+
+let index = 0;
 
 for (const but of buttons) { 
     if (but === equal) {
         but.addEventListener('click', () => {
-            let str1 = display.textContent.slice(0, 1);
-            let str2 = display.textContent.slice(1, 2);
-            let str3 = display.textContent.slice(2, 3);
-            display.textContent = (operate(parseInt(str1), str2, parseInt(str3)));
+            display.textContent = operate(parseInt(arr[index]), arr[index + 1], parseInt(arr[index + 2]));
+            arr.splice(0, arr.length);
         })
     } else if (but !== clear) {
         but.addEventListener('click', () => {
+        arr.push(but.textContent);
+        console.log(arr);
         display.textContent += but.textContent;
     })
-}};
+}}
+
 
 allClear.onclick = () => {
+    arr.splice(0, arr.length);
     return display.textContent = "";
 }
 
