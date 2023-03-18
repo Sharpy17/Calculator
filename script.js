@@ -42,13 +42,6 @@ function divide (a, b) {
     return a / b;
 }
 
-// function sum (array) {
-//     const total = array.reduce((total, number) => {
-//         return total + number;
-//     }) 
-//     return total;
-// }
-
 function operate (a, operator, b) {
     if (operator === 'x') {
         return multiply(a, b);
@@ -64,13 +57,13 @@ function operate (a, operator, b) {
 };
 
 const arr = [];
-
-let index = 0;
+const operations = ['x', '/', '+', '-'];
 
 for (const but of buttons) { 
     if (but === equal) {
         but.addEventListener('click', () => {
-            display.textContent = operate(parseInt(arr[index]), arr[index + 1], parseInt(arr[index + 2]));
+            const findIndex = arr.findIndex(op => op === 'x' || op === '/' || op === '+' || op === '-');
+            display.textContent = operate(parseInt(arr.slice(0, findIndex).join('')), arr[findIndex], parseInt(arr.slice(findIndex + 1, arr.length).join('')));
             arr.splice(0, arr.length);
         })
     } else if (but !== clear) {
@@ -81,10 +74,7 @@ for (const but of buttons) {
     })
 }}
 
-
 allClear.onclick = () => {
     arr.splice(0, arr.length);
     return display.textContent = "";
 }
-
-
