@@ -75,19 +75,17 @@ for (const but of buttons) {
     } else if (but === equal) {
         but.addEventListener('click', () => {
             for (let i = 0; i < operations.length; i++) {
-                if (operations.length === 1) {
-                    const initialIndex = arr.findIndex(op => op === 'x' || op === '/' || op === '+' || op === '-');
-                    display.textContent = operate(parseInt(arr.slice(0, initialIndex).join('')), arr[initialIndex], parseInt(arr.slice(initialIndex + 1, arr.length).join('')));
-                } else if (operations.length > 1) {
-                let initialIndex = arr.findIndex(op => op === 'x' || op === '/' || op === '+' || op === '-');
-                let previousOperant = operate(parseInt(arr.slice(0, initialIndex).join('')), arr[initialIndex], parseInt(arr.slice(initialIndex + 1, arr.length).join('')));
-                arr.splice (initialIndex, initialIndex);
-                let newIndex = arr.findIndex(op => op === 'x' || op === '/' || op === '+' || op === '-');
-                display.textContent = operate(previousOperant, arr[newIndex], parseInt(arr.slice(newIndex + 1, arr.length)));
-                initialIndex = newIndex;
-             }};
-    })
-}};
+                let initialIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
+                const operation = arr[initialIndex];
+                arr.splice(initialIndex, initialIndex);
+                let nextIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
+                let answer = operate(parseInt(arr.slice(0, initialIndex).join()), operation, parseInt(arr.slice(initialIndex, nextIndex).join()));
+                display.textContent = answer;
+                arr.splice(0, nextIndex);
+                arr.unshift(answer);
+             }}
+    )}
+};
 
 allClear.onclick = () => {
     arr.splice(0, arr.length);
