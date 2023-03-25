@@ -76,20 +76,16 @@ for (const but of buttons) {
         but.addEventListener('click', () => {
             for (let i = 0; i < operations.length; i++) {
                 let initialIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
-                let operation = arr[initialIndex];
-                let firstOperant = parseInt(arr.slice(0, initialIndex).join(''));
-                console.log(firstOperant)
-                let secondOperant = parseInt(arr.slice(initialIndex, nextIndex + 1).join(''));
-                arr.splice(initialIndex, initialIndex);
+                const operation = arr[initialIndex];
+                arr.splice(initialIndex, 1);
                 let nextIndex = arr.findIndex(index => (index === 'x' || index === '/' || index === '+' || index === '-'));
                 if (nextIndex === -1) {
                     nextIndex = arr.length - 1;
                 };
                 arr.push('randomElement');
-                let answer = operate(firstOperant, operation, secondOperant);
+                let answer = operate(parseInt(arr.slice(0, initialIndex).join('')), operation, parseInt(arr.slice(initialIndex, nextIndex + 1).join('')));
                 display.textContent = answer;
                 arr.splice(0, nextIndex, answer);
-                console.log(arr);
              }}
     )}
 };
