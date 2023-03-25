@@ -61,7 +61,7 @@ function operate (a, operator, b) {
 };
 
 const arr = [];
-const operations = [];
+let operations = [];
 
 for (const but of buttons) { 
     if (but !== clear && but !== equal) {
@@ -72,6 +72,19 @@ for (const but of buttons) {
             }
             display.textContent += but.textContent;
             });
+    } else if (but === clear) {
+        but.addEventListener('click', () => {
+            if (arr[arr.length - 1] === 'x' || arr[arr.length - 1] === '/' || arr[arr.length - 1] === '+' || arr[arr.length - 1] === '-') {
+                operations.splice(operations.length - 1, 1);
+                arr.splice(arr.length - 1, 1);
+                let displayString = display.textContent.slice(0, display.textContent.length - 1);
+                display.textContent = displayString;
+            } else {
+                arr.splice(arr.length - 1, 1);
+                let displayString = display.textContent.slice(0, display.textContent.length - 1);
+                display.textContent = displayString;
+            }
+            });
     } else if (but === equal) {
         but.addEventListener('click', () => {
             for (let i = 0; i < operations.length; i++) {
@@ -80,13 +93,14 @@ for (const but of buttons) {
                 arr.splice(initialIndex, 1);
                 let nextIndex = arr.findIndex(index => (index === 'x' || index === '/' || index === '+' || index === '-'));
                 if (nextIndex === -1) {
-                    nextIndex = arr.length - 1;
+                    nextIndex = arr.length;
                 };
-                arr.push('randomElement');
-                let answer = operate(parseInt(arr.slice(0, initialIndex).join('')), operation, parseInt(arr.slice(initialIndex, nextIndex + 1).join('')));
-                display.textContent = answer;
+                let answer = operate(parseFloat(arr.slice(0, initialIndex).join('')), operation, parseFloat(arr.slice(initialIndex, nextIndex).join('')));
+                display.textContent = Math.round((answer + Number.EPSILON) * 100) / 100;
                 arr.splice(0, nextIndex, answer);
-             }}
+             }
+             operations = [];
+            }
     )}
 };
 
