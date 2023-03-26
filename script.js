@@ -63,49 +63,84 @@ function operate (a, operator, b) {
 const arr = [];
 let operations = [];
 
-for (const but of buttons) { 
+function arrPush (key) {
+    if (key !== equal) {
+    arr.push(key);
+    if (key === 'x' || key === '/' || key === '+' || key === '-') {
+        operations.push(key);
+    }
+    display.value += key;
+}};
+
+function deleteNumber () {
+    if (arr[arr.length - 1] === 'x' || arr[arr.length - 1] === '/' || arr[arr.length - 1] === '+' || arr[arr.length - 1] === '-') {
+        operations.splice(operations.length - 1, 1);
+        arr.splice(arr.length - 1, 1);
+        let displayString = display.value.slice(0, display.value.length - 1);
+        display.value = displayString;
+    } else {
+        arr.splice(arr.length - 1, 1);
+        let displayString = display.value.slice(0, display.value.length - 1);
+        display.value = displayString;
+    }
+}
+
+function toEqual () {
+        for (let i = 0; i < operations.length; i++) {
+            let initialIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
+            const operation = arr[initialIndex];
+            arr.splice(initialIndex, 1);
+            let nextIndex = arr.findIndex(index => (index === 'x' || index === '/' || index === '+' || index === '-'));
+            if (nextIndex === -1) {
+                nextIndex = arr.length;
+            };
+            let answer = operate(parseFloat(arr.slice(0, initialIndex).join('')), operation, parseFloat(arr.slice(initialIndex, nextIndex).join('')));
+            display.value = Math.round((answer + Number.EPSILON) * 100) / 100;
+            arr.splice(0, nextIndex, answer);
+         }
+         operations = [];
+        };
+
+
+
+for (const but of buttons) {
     if (but !== clear && but !== equal) {
         but.addEventListener('click', () => {
             arr.push(but.textContent);
             if (but.textContent === 'x' || but.textContent === '/' || but.textContent === '+' || but.textContent === '-') {
                 operations.push(but.textContent);
             }
-            display.textContent += but.textContent;
+            display.value += but.textContent;
             });
     } else if (but === clear) {
-        but.addEventListener('click', () => {
-            if (arr[arr.length - 1] === 'x' || arr[arr.length - 1] === '/' || arr[arr.length - 1] === '+' || arr[arr.length - 1] === '-') {
-                operations.splice(operations.length - 1, 1);
-                arr.splice(arr.length - 1, 1);
-                let displayString = display.textContent.slice(0, display.textContent.length - 1);
-                display.textContent = displayString;
-            } else {
-                arr.splice(arr.length - 1, 1);
-                let displayString = display.textContent.slice(0, display.textContent.length - 1);
-                display.textContent = displayString;
-            }
-            });
+        but.addEventListener('click', deleteNumber);
     } else if (but === equal) {
-        but.addEventListener('click', () => {
-            for (let i = 0; i < operations.length; i++) {
-                let initialIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
-                const operation = arr[initialIndex];
-                arr.splice(initialIndex, 1);
-                let nextIndex = arr.findIndex(index => (index === 'x' || index === '/' || index === '+' || index === '-'));
-                if (nextIndex === -1) {
-                    nextIndex = arr.length;
-                };
-                let answer = operate(parseFloat(arr.slice(0, initialIndex).join('')), operation, parseFloat(arr.slice(initialIndex, nextIndex).join('')));
-                display.textContent = Math.round((answer + Number.EPSILON) * 100) / 100;
-                arr.splice(0, nextIndex, answer);
-             }
-             operations = [];
-            }
-    )}
+        but.addEventListener('click', toEqual());
+    }
+    window.lastNum = but;
 };
 
 allClear.onclick = () => {
     arr.splice(0, arr.length);
     operations.splice(0, operations.length);
-    return display.textContent = "";
-}
+    return display.value = "";
+};
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === '1') { arrPush(event.key); }
+    if (event.key === '2') { arrPush(event.key); }
+    if (event.key === '3') { arrPush(event.key); }
+    if (event.key === '4') { arrPush(event.key); }
+    if (event.key === '5') { arrPush(event.key); }
+    if (event.key === '6') { arrPush(event.key); }
+    if (event.key === '7') { arrPush(event.key); }
+    if (event.key === '8') { arrPush(event.key); }
+    if (event.key === '9') { arrPush(event.key); }
+    if (event.key === '0') { arrPush(event.key); }
+    if (event.key === '+') { arrPush(event.key); }
+    if (event.key === '*') { arrPush(event.key); }
+    if (event.key === '/') { arrPush(event.key); }
+    if (event.key === '-') { arrPush(event.key); }
+    if (event.key === 'Backspace') { deleteNumber(); }
+    if (event.key === '=') { toEqual(); }
+});
