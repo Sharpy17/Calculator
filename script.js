@@ -83,25 +83,23 @@ function deleteNumber () {
         let displayString = display.value.slice(0, display.value.length - 1);
         display.value = displayString;
     }
-}
+};
 
 function toEqual () {
-        for (let i = 0; i < operations.length; i++) {
-            let initialIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
-            const operation = arr[initialIndex];
-            arr.splice(initialIndex, 1);
-            let nextIndex = arr.findIndex(index => (index === 'x' || index === '/' || index === '+' || index === '-'));
-            if (nextIndex === -1) {
+    for (let i = 0; i < operations.length; i++) {
+        let initialIndex = arr.findIndex((index) => (index === 'x' || index === '/' || index === '+' || index === '-'));
+        const operation = arr[initialIndex];
+        arr.splice(initialIndex, 1);
+        let nextIndex = arr.findIndex(index => (index === 'x' || index === '/' || index === '+' || index === '-'));
+        if (nextIndex === -1) {
                 nextIndex = arr.length;
-            };
-            let answer = operate(parseFloat(arr.slice(0, initialIndex).join('')), operation, parseFloat(arr.slice(initialIndex, nextIndex).join('')));
-            display.value = Math.round((answer + Number.EPSILON) * 100) / 100;
-            arr.splice(0, nextIndex, answer);
-         }
-         operations = [];
         };
-
-
+        let answer = operate(parseFloat(arr.slice(0, initialIndex).join('')), operation, parseFloat(arr.slice(initialIndex, nextIndex).join('')));
+        display.value = Math.round((answer + Number.EPSILON) * 100) / 100;
+        arr.splice(0, nextIndex, answer);
+        }
+        operations = [];
+};
 
 for (const but of buttons) {
     if (but !== clear && but !== equal) {
@@ -115,9 +113,8 @@ for (const but of buttons) {
     } else if (but === clear) {
         but.addEventListener('click', deleteNumber);
     } else if (but === equal) {
-        but.addEventListener('click', toEqual());
+        but.addEventListener('click', toEqual);
     }
-    window.lastNum = but;
 };
 
 allClear.onclick = () => {
@@ -138,9 +135,10 @@ document.addEventListener('keydown', (event) => {
     if (event.key === '9') { arrPush(event.key); }
     if (event.key === '0') { arrPush(event.key); }
     if (event.key === '+') { arrPush(event.key); }
-    if (event.key === '*') { arrPush(event.key); }
+    if (event.key === 'x') { arrPush(event.key); }
     if (event.key === '/') { arrPush(event.key); }
     if (event.key === '-') { arrPush(event.key); }
+    if (event.key === '.') { arrPush(event.key); }
     if (event.key === 'Backspace') { deleteNumber(); }
     if (event.key === '=') { toEqual(); }
 });
