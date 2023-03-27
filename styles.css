@@ -12,29 +12,31 @@
 body {
     display: flex;
     flex-direction: column;
-    margin-top: 125px;
     height: 100vh;
     width: 100vw;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
 button {
     height: 60px;
-    border: 2px solid rgb(18, 6, 122);
+    border: 3px solid rgb(18, 6, 122);
 }
 
 .thewholething {
+    height: 368px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column; 
+    border: 25px solid rgba(5, 68, 139, 0.459);
+    gap: 3px;
+    background-color: rgba(5, 68, 139, 0.459);
 }
 
 .big-container {
     display: flex;
     flex-direction: column;
-    gap: 35px;
 }
 
 .clear,
@@ -45,14 +47,18 @@ button {
 
 .container1 {
     width: 300px;
-    height: 25px;
+    height: 62px;
     display: flex;
+    background-color: rgba(5, 68, 139, 0.459);
+    gap: 3px;
 }
 
 .container2 {
     width: 300px;
-    height: 75px;
+    height: 250px;
     display: flex;
+    background-color: rgba(5, 68, 139, 0.459);
+    gap: 3px;
 }
 
 .operations,
@@ -64,6 +70,8 @@ button {
     flex: 1;
     flex-direction: column; 
     align-self: flex-start;
+    gap: 3px;
+    background-color: rgba(5, 68, 139, 0.459);
 }
 
 .display {
@@ -74,4 +82,5 @@ button {
 
 .copyright {
     font-family: Alkatra;
+    font-size: 20px;
 }
