@@ -46,10 +46,11 @@ function operate (a, operator, b) {
     if (operator === 'x') {
         return multiply(a, b);
     } else if (operator === '/') {
-        if (b !== 0) {
-        return divide(a, b);
+        if (b === 0) {
+            alert("Nice try");
+            return "ERROR";
         } else {
-            return "ERROR"
+            return divide(a, b);
         }
     } else if (operator === '+') {
         return add(a, b);
@@ -65,10 +66,10 @@ let operations = [];
 
 function arrPush (key) {
     if (key !== equal) {
-    arr.push(key);
-    if (key === 'x' || key === '/' || key === '+' || key === '-') {
-        operations.push(key);
-    }
+        arr.push(key);
+        if (key === 'x' || key === '/' || key === '+' || key === '-') {
+            operations.push(key);
+        }
     display.value += key;
 }};
 
@@ -102,19 +103,15 @@ function toEqual () {
 };
 
 for (const but of buttons) {
+    but.addEventListener('click', () => {
     if (but !== clear && but !== equal) {
-        but.addEventListener('click', () => {
-            arr.push(but.textContent);
-            if (but.textContent === 'x' || but.textContent === '/' || but.textContent === '+' || but.textContent === '-') {
-                operations.push(but.textContent);
-            }
-            display.value += but.textContent;
-            });
+        arrPush(but.textContent);
     } else if (but === clear) {
-        but.addEventListener('click', deleteNumber);
+        deleteNumber();
     } else if (but === equal) {
-        but.addEventListener('click', toEqual);
+        toEqual();
     }
+});
 };
 
 allClear.onclick = () => {
@@ -124,21 +121,12 @@ allClear.onclick = () => {
 };
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === '1') { arrPush(event.key); }
-    if (event.key === '2') { arrPush(event.key); }
-    if (event.key === '3') { arrPush(event.key); }
-    if (event.key === '4') { arrPush(event.key); }
-    if (event.key === '5') { arrPush(event.key); }
-    if (event.key === '6') { arrPush(event.key); }
-    if (event.key === '7') { arrPush(event.key); }
-    if (event.key === '8') { arrPush(event.key); }
-    if (event.key === '9') { arrPush(event.key); }
-    if (event.key === '0') { arrPush(event.key); }
+    if (event.key >= 0 && event.key <= 9) { arrPush(event.key); }
     if (event.key === '+') { arrPush(event.key); }
     if (event.key === 'x') { arrPush(event.key); }
     if (event.key === '/') { arrPush(event.key); }
     if (event.key === '-') { arrPush(event.key); }
     if (event.key === '.') { arrPush(event.key); }
     if (event.key === 'Backspace') { deleteNumber(); }
-    if (event.key === '=') { toEqual(); }
+    if (event.key === '=' || event.key ==='Enter') { toEqual(); }
 });
